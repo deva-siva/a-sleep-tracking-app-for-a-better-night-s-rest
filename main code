@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int convertToMinutes(char* time) {
+    int hours, minutes;
+     sscanf(time, "%d:%d", &hours, &minutes);
+    return hours * 60 + minutes; 
+}
+
+void calculateSleepDuration(int startTime, int wakeUpTime) {
+    int duration = wakeUpTime - startTime;
+
+    if (duration < 0) {
+        duration += 24 * 60; 
+    }
+
+    int hours = duration / 60;  
+    int minutes = duration % 60; 
+
+    printf("You slept for: %d hours and %d minutes.\n", hours, minutes);
+}
+
+int main() {
+    char sleepStart[6], wakeUp[6];
+    
+     printf("Enter the time you went to sleep (in HH:mm format): ");
+    fgets(sleepStart, sizeof(sleepStart), stdin);
+    sleepStart[strcspn(sleepStart, "\n")] = 0; 
+
+  printf("Enter the time you woke up (in HH:mm format): ");
+    fgets(wakeUp, sizeof(wakeUp), stdin);
+    wakeUp[strcspn(wakeUp, "\n")] = 0; 
+
+
+    int startTimeInMinutes = convertToMinutes(sleepStart);
+    int wakeUpTimeInMinutes = convertToMinutes(wakeUp);
+
+  
+    calculateSleepDuration(startTimeInMinutes, wakeUpTimeInMinutes);
+
+    return 0;
+}
